@@ -1,0 +1,13 @@
+# Fnugg app
+
+Norwegians love skiing, let's support that by creating a simple app for finding out what conditions are like at the moment at specific ski resorts.
+We'll do this by using the Fnugg API to find ski resorts in Norway. Then we could either use that data to give users the relevant information, or we could use the Fnugg widget.
+
+- Fnugg API: https://api.fnugg.no/
+- Fnugg Widget (optional): https://www.fnugg.no/widget/resort/
+
+The app should have basic UX functionality for finding ski resorts. For example using a search with autocomplete. It should also be responsive and compatible with all currently relevant browsers
+
+The target design is included in this folder. Design changes are fine, but please describe why you made those changes.
+
+Try to keep the code clean, structured and commented!
