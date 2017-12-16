@@ -9,44 +9,83 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap; }
+  flex-wrap: nowrap;
+  border: 0;
+  outline: none; }
 
 label {
   position: absolute;
   left: -999px; }
 
 input[type="text"] {
-  flex-basis: 80%;
+  flex-basis: 85%;
+  flex-grow: 1;
   border: 0;
   padding: 1em;
   background-color: #fff;
-  color: #292929; }
+  color: #292929;
+  border: 0;
+  outline: none; }
   input[type="text"]:focus {
     outline: none; }
 
 input[type="submit"] {
-  flex-basis: 20%;
+  flex-basis: 15%;
   border: 0;
   background-color: #07A1C4;
   color: #fff;
-  transition: all 0.2s; }
+  -ms-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s; }
   input[type="submit"]:hover {
-    background-color: rgba(7, 161, 196, 0.85); }
+    background-color: rgba(7, 161, 196, 0.8); }
 
 .searched-for {
   display: block;
-  text-align: center; }
+  text-align: center;
+  margin-bottom: 4em; }
 
+.ui-autocomplete {
+  background-color: #404040;
+  outline: none; }
+
+.ui-menu-item-wrapper:focus, .ui-menu-item-wrapper:hover {
+  background-color: #07A1C4;
+  color: #fff; }
+
+.ui-menu-item {
+  color: #fff; }
+  .ui-menu-item .ui-menu-item-wrapper {
+    padding: 0.7em 1em; }
+  .ui-menu-item .ui-state-active {
+    background-color: #07A1C4; }
+
+.resort-results-block {
+  font-size: 13px; }
+.resort-logo {
+  padding: 0.5em 0.7em; }
+  .resort-logo img {
+    max-width: 110px; }
 .resort-row {
   background-color: #333333;
   border-bottom: 1px solid #404040;
-  padding: 0.5em 0.7em; }
+  padding: 0.7em 1.4em; }
+.resort-condition {
+  font-style: italic; }
+.resort-name {
+  border-top: 2px solid #07A1C4;
+  background: #404040; }
+  .resort-name a {
+    color: #fff; }
+    .resort-name a:hover {
+      text-decoration: none; }
 .resort-stats {
   display: flex;
   flex-direction: column;
   background-color: #333333;
   border-bottom: 1px solid #404040; }
-.resort-column {
+.resort-stats-column {
   flex: 0 1 100%;
   border-bottom: 1px solid #404040;
   padding: 0.5em 0.7em; }
@@ -56,15 +95,6 @@ input[type="submit"] {
     max-width: 80px; }
   .resort-weather span {
     display: block; }
-.resort-logo {
-  padding: 0.5em 0.7em; }
-  .resort-logo img {
-    max-width: 110px; }
-.resort-condition {
-  font-style: italic; }
-.resort-name {
-  border-top: 2px solid #07A1C4;
-  background: #404040; }
 
 @media screen and (min-width: 640px) {
   .resort-stats {
@@ -76,9 +106,15 @@ input[type="submit"] {
   text-align: center; }
   .resort-temp-wind__temp {
     font-size: 4em; }
+  .resort-temp-wind__arrow {
+    display: inline-block;
+    transform: rotate(237.5deg);
+    -ms-transform: rotate(237.5deg);
+    -webkit-transform: rotate(237.5deg);
+    -moz-transform: rotate(237.5deg);
+    -o-transform: rotate(237.5deg); }
 
 .resort-lifts-slopes {
-  font-size: 0.75em;
   position: relative; }
   .resort-lifts-slopes__no {
     font-size: 2.6em;
@@ -99,6 +135,16 @@ input[type="submit"] {
   .welcome p {
     font-size: 0.9em; }
 
+.widget {
+  width: 100%;
+  border: none;
+  border: 0;
+  display: block;
+  height: 330px; }
+
+@media screen and (min-width: 640px) {
+  .widget {
+    height: 270px; } }
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
@@ -456,5 +502,10 @@ body {
     height: 5px;
     width: 100%;
     background-color: #07A1C4; }
+
+.credit {
+  font-size: 0.8em;
+  color: #fff;
+  padding: 0 1.2em; }
 
 /*# sourceMappingURL=style.css.map */

@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  border: 0;
+  outline: none;
 }
 
 label {
@@ -12,11 +14,14 @@ label {
 }
 
 input[type="text"] {
-  flex-basis: 80%;
+  flex-basis: 85%;
+  flex-grow: 1;
   border: 0;
   padding: 1em;
   background-color: $white;
   color: $dark-gray;
+  border: 0;
+  outline: none;
 
   &:focus {
     outline: none;
@@ -24,18 +29,69 @@ input[type="text"] {
 }
 
 input[type="submit"] {
-  flex-basis: 20%;
+  flex-basis: 15%;
   border: 0;
   background-color: $primary-color;
   color: $white;
-  transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
 
   &:hover {
-    background-color: rgba($primary-color, .85);
+    background-color: rgba($primary-color, .8);
   }
 }
 
 .searched-for {
   display: block;
   text-align: center;
+  margin-bottom: 4em;
+}
+
+// Credit goes to Claustrofob for providing the CSS to remove all styles off jquery-ui's autocomplete:
+// .ui-state-active,
+// .ui-widget-content .ui-state-active,
+// .ui-widget-header .ui-state-active,
+// .ui-autocomplete, .ui-autocomplete:hover,
+// .ui-menu-item, .ui-menu-item:hover,
+// .ui-menu-item a, .ui-menu-item a:hover,
+// .ui-widget-content .ui-state-focus,
+// .ui-widget-header .ui-state-focus,
+// .ui-widget-content .ui-state-hover,
+// .ui-widget-header .ui-state-hover,
+// .ui-menu .ui-menu-item a.ui-state-focus,
+// .ui-menu .ui-menu-item a.ui-state-active,
+// .ui-menu .ui-menu-item a {
+//   padding: 0;
+//   margin: 0;
+//   display: block;
+//   border: 0;
+//   border-collapse: collapse;
+//   outline: none;
+// }
+
+.ui-autocomplete {
+  background-color: $light-gray;
+  outline: none;
+}
+
+.ui-menu-item-wrapper {
+  &:focus,
+  &:hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}
+
+.ui-menu-item {
+  color: $white;
+
+  .ui-menu-item-wrapper {
+    padding: 0.7em 1em;
+  }
+
+  .ui-state-active {
+    background-color: $primary-color;
+  }
 }

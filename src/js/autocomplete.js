@@ -1,5 +1,9 @@
 /**
-** AUTOCOMPLETE
+*
+*   AUTOCOMPLETE.JS
+*
+*   This script
+*
 **/
 
 // Alt 1. Get complete list of ski resorts, put in list and send as param to jQuery UI Autocomlete.
@@ -25,8 +29,6 @@
 
 // To run alt 1
 // getNearbyResults();
-
-
 
 
 // Alt 2. Using fnugg API for autocomplete only returns ski resort names that starts with the typed letters.
@@ -62,53 +64,41 @@
 
 
 
+
+
+
+
 // Alt 3. Optimized. Directly feeds response of ajax request to autocomplete source-parameter
 $('#search').autocomplete({
-  // Source, type function.
-  source: function(request, response) {
-    $.ajax({
-        url: "https://api.fnugg.no/suggest/autocomplete",
-        dataType: "json",
-        data: {
-            q: $('#search').val()
-        },
-        success: function (data) {
-          var listOfNearbyResults = [];
-          $.each(data.result, function(i, result) {
-            listOfNearbyResults[i] = result.name;
-          });
-          response(listOfNearbyResults);
-        }
-    });
-  },
-  // Adds delay of 500ms
-  // delay: 500,
-  // Min. no of letters before autocomplete makes suggestions
-  minLength: 3,
-  // Search the selection on selection/enter
-  select: function(event, ui) {
-    // $('#search').val(ui.item.value);
-    $('form').submit();
+// Source, type function.
+source: function(request, response) {
+  $.ajax({
+      url: "https://api.fnugg.no/suggest/autocomplete",
+      dataType: "json",
+      data: {
+          q: $('#search').val()
+      },
+      success: function (data) {
+        var listOfNearbyResults = [];
+        $.each(data.result, function(i, result) {
+          listOfNearbyResults[i] = result.name;
+        });
+        response(listOfNearbyResults);
+      }
+  });
+},
+// Min. no of letters before autocomplete makes suggestions
+minLength: 2,
+// Autofocus on first in list
+autoFocus: true,
+// Search the selection on selection/enter
+select: function(event, ui) {
+  $('#search').val(ui.item.value);
+  $('form').submit();
+}
+// Closes suggestion menu on enter
+}).keyup(function (e) {
+  if(e.which === 13) {
+      $(".ui-menu-item").hide();
   }
-});
-
-// Submit form when hitting enter
-// $('#search').keypress(function (e) {
-//   if (e.keyCode == 13) {
-//     $('form').submit(function(e) {
-//        e.preventDefault();
-//        getInfo();
-//     });
-//   }
-// });
-
-
-// Run ajax on submit of form.
-$('form').submit(function(e) {
-   e.preventDefault();
-   $('.welcome').fadeOut();
-   // setTimeout(function() {
-   //   getInfo();
-   // }, 500);
-   getInfo();
 });

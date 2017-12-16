@@ -1,10 +1,42 @@
 .resort {
 
+  &-results-block {
+    font-size: 13px;
+  }
+
+  &-logo {
+    padding: 0.5em 0.7em;
+
+    img {
+      max-width: 110px;
+    }
+  }
+
   &-row {
     background-color: $field-bg-color;
     border-bottom: 1px solid $border-color;
-    padding: 0.5em 0.7em;
+    padding: 0.7em 1.4em;
   }
+
+
+  &-condition {
+    font-style: italic;
+  }
+
+  &-name {
+    border-top: 2px solid $primary-color;
+    background: $border-color;
+
+    a {
+      color: $white;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  // Stats
 
   &-stats {
     display: flex;
@@ -13,12 +45,11 @@
     border-bottom: 1px solid $border-color;
   }
 
-  &-column {
+  &-stats-column {
     flex: 0 1 100%;
     border-bottom: 1px solid $border-color;
     padding: 0.5em 0.7em;
   }
-
 
   &-weather {
     text-align: center;
@@ -32,22 +63,6 @@
     }
   }
 
-  &-logo {
-    padding: 0.5em 0.7em;
-
-    img {
-      max-width: 110px;
-    }
-  }
-
-  &-condition {
-    font-style: italic;
-  }
-
-  &-name {
-    border-top: 2px solid $primary-color;
-    background: $border-color;
-  }
 }
 
 @media screen and (min-width: 640px) {
@@ -71,10 +86,18 @@
     font-size: 4em;
   }
 
+  &__arrow {
+    display: inline-block;
+    transform:rotate(237.5deg);
+    -ms-transform:rotate(237.5deg);
+    -webkit-transform:rotate(237.5deg);
+    -moz-transform:rotate(237.5deg);
+    -o-transform:rotate(237.5deg);
+  }
+
 }
 
 .resort-lifts-slopes {
-  font-size: 0.75em;
   position: relative;
 
   &__no {
