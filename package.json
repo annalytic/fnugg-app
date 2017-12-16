@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "flexboxgrid-sass": "^8.0.5",
-    "normalize.scss": "^0.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "uglify-js": "^3.2.2"
   },

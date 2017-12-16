@@ -1,4 +1,5 @@
 .resort {
+
   &-row {
     background-color: $field-bg-color;
     border-bottom: 1px solid $border-color;
@@ -19,19 +20,31 @@
   }
 
 
-  &-condition {
+  &-weather {
     text-align: center;
+
+    img {
+      max-width: 80px;
+    }
+
+    span {
+      display: block;
+    }
   }
 
-  &__logo {
+  &-logo {
     padding: 0.5em 0.7em;
+
+    img {
+      max-width: 110px;
+    }
   }
 
-  &__condition {
+  &-condition {
     font-style: italic;
   }
 
-  &__name {
+  &-name {
     border-top: 2px solid $primary-color;
     background: $border-color;
   }
