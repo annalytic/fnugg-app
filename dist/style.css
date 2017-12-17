@@ -545,7 +545,8 @@ input[type="submit"] {
     background-color: #07A1C4; }
 
 * {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  overflow-x: hidden; }
 
 body {
   background-color: #292929;
