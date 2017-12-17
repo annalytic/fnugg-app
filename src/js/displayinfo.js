@@ -41,7 +41,7 @@ function displayInfo() {
 
     // Column: Weather symbol
     $('.resort-stats').append('<div class="resort-stats-column resort-stats-weather">'
-    + '<img src="../src/assets/img/weather-icons/svg/' + info._source.conditions.combined.top.symbol.yr_id + '.svg" xmlns="http://www.w3.org/2000/svg/">'
+    + '<img src="../src/assets/img/weather-icons/png/' + info._source.conditions.combined.top.symbol.yr_id + '.png">'
     + '<span>' + info._source.conditions.combined.top.symbol.name + '</span>'
     + '</div>');
 
