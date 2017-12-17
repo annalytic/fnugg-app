@@ -1,17 +1,27 @@
 /**
+*   AUTOCOMPLETE-JQUERYUI.JS
 *
-*   AUTOCOMPLETE.JS
-*
-*   Directly feeds response of ajax request to autocomplete source-parameter
-*
+*   Uses jQuery UI's "Autocomplete".
+*   (To see the partial working solution solved with Vanilla JS go to autocomplete-vanillajs.js)
+
+*   Directly feeds response of AJAX request to autocompletes "source" parameter
 **/
 
 $('#search').autocomplete({
-  // Source, type function.
+
+  /*
+  Our SOURCE type is a function that gets two arguments, a "request" object,
+  which refers to the value in the text input and a "response" callback that excepts the data to
+  suggest to the user.
+  */
+
   source: function(request, response) {
     $.ajax({
+      // URL to send the request to
       url: "https://api.fnugg.no/suggest/autocomplete",
+      // Datatype expected from the server response
       dataType: "json",
+      // Data to be sent to the server. In our case this is the value of the input field.
       data: {
           q: $('#search').val()
       },
@@ -25,6 +35,7 @@ $('#search').autocomplete({
 
       success: function (data) {
         var listOfNearbyResults = [];
+        // For each object in the response get the value of the key "name" and store it in listOfNearbyResults.
         $.each(data.result, function(i, result) {
           listOfNearbyResults[i] = result.name;
         });

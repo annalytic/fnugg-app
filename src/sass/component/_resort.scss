@@ -21,10 +21,8 @@
 
   &-condition {
     font-style: italic;
-
-
     span:nth-child(2) {
-      float: right;
+      display: inline-block;
     }
   }
 
@@ -40,21 +38,21 @@
       }
     }
   }
+}
 
-  // Stats
+// Stats
+.resort-stats {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: $field-bg-color;
+  border-bottom: 1px solid $border-color;
 
-  &-stats {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    background-color: $field-bg-color;
-    border-bottom: 1px solid $border-color;
-  }
-
-  &-stats-column {
+  &-column {
     flex: 0 1 100%;
     border-bottom: 1px solid $border-color;
     padding: 0.5em 0.7em;
+    height: 100px;
   }
 
   &-weather {
@@ -68,37 +66,9 @@
       display: block;
     }
   }
-
 }
 
-@media screen and (min-width: 640px) {
-  .resort {
-
-    &-stats {
-      flex-direction: row;
-    }
-
-    &-stats-column {
-      flex: 0 1 50%;
-      border-right: 1px solid $border-color;
-    }
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .resort {
-
-    &-stats {
-      flex-direction: row;
-    }
-
-    &-stats-column {
-      flex: 0 1 20%;
-    }
-  }
-}
-
-
+// Temp and wind
 .resort-temp-wind {
   text-align: center;
 
@@ -117,6 +87,8 @@
 
 }
 
+
+// Lifts and slopes
 .resort-lifts-slopes {
   position: relative;
   height: 100px;
@@ -148,5 +120,67 @@
     position: absolute;
     right: 7px;
     bottom: 5px;
+  }
+}
+
+
+// Snow depth
+.resort-snow-depth {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    border-bottom: 1px solid $border-color;
+    flex: 0 1 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  span:nth-child(1) {
+    margin-right: 2em;
+  }
+
+  span:nth-child(2) {
+    margin-right: 0.5em;
+  }
+
+  .depth {
+    font-size: 1.4em;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .resort {
+
+    &-stats {
+      flex-direction: row;
+    }
+
+    &-stats-column {
+      flex: 0 1 50%;
+      border-right: 1px solid $border-color;
+    }
+
+    &-condition {
+      span:nth-child(2) {
+        float: right;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .resort {
+
+    &-stats {
+      flex-direction: row;
+    }
+
+    &-stats-column {
+      flex: 0 1 20%;
+    }
   }
 }

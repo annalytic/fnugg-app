@@ -6,7 +6,6 @@
 *
 **/
 
-
 // Get input element, and add a eventlistener for keyup.
 // When the event keyup fires run function "a"utocomplete".
 
@@ -45,7 +44,7 @@ function autocomplete(event) {
       // We covert the JSON response to an object
       var response = JSON.parse( this.responseText );
 
-      // Clear any previously loaded options in the datalist
+      // Remove any previously loaded options in the datalist
       options.innerHTML = "";
 
       // Add each suggestion to datalist
@@ -57,19 +56,15 @@ function autocomplete(event) {
 
           // Attach the option to the datalist element
           options.appendChild(option);
-      }); // end loop
-    } // end if
-  }; // end onreadystatechange
+      });
+    }
+  };
 
-
+  // Open request
   xhr.open("GET", "https://api.fnugg.no/suggest/autocomplete?q=" + search.value, true);
+
+  // Send request to webserver
   xhr.send();
+
   }
 }
-
-// Listen for input event and search on selection. No good way to listen for datalist options.
-// search.addEventListener('input', function () {
-//   console.log('changed');
-//   var val = document.getElementById("txt").value;
-//   alert(val);
-// });
