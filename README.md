@@ -84,13 +84,15 @@ Denne filen håndterer det som skjer når formularet sendes. Vi ønsker nemlig i
 
 ##### displayinfo.js
 
-Basert på valget som brukeren tar og verdien som sendes fra input-feltet så utføres det en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved bruk av jQuery append.
+Basert på valget som brukeren tar og verdien som sendes fra `input`-feltet så utføres det en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved bruk av jQuery `append`.
+
+brukt https://codebeautify.org/jsonviewer treeview gjorde det enklere for meg å hente ut data jeg var interessert i.
 
 ##### displaywidget.js
 
-Displaywidget.js gjør mye av det samme som `displayinfo.js`, bortsett fra at istedenfor å skrive ut masse HTML så skrives det ut en iframe.
+`displaywidget.js` gjør mye av det samme som `displayinfo.js`, bortsett fra at å skrive ut iframe istedenfor.
 
-For å se denne istedenfor egengenerert resultat må man fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
+For å se dette egengenererte resultatet må man fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
 
 ##### progressbar.js
 
@@ -102,12 +104,13 @@ Modularisert sass-kode ligger i mappene components og base. `components` holder 
 
 ## Diskusjon
 
-Jeg begynte prosjektet uten å sette meg mye inn i hvordan Fnugg sin søkemotor fungerer. Jeg ville prøve å lage en søkemotor som jeg mente var best basert på det jeg så for meg brukeren ønsket av informasjon og det jeg kunne få tak i via APIet. 
+Jeg begynte prosjektet uten å sette meg mye inn i hvordan Fnugg sin søkemotor fungerer. Jeg ville prøve å lage en søkemotor etter beste mulig evne basert på det jeg så for meg brukeren ønsket av informasjon og det jeg kunne få tak i via APIet. 
 
-Jeg brukte Fnuggs Search API til å skrive inn og søke på litt forskjellig som f.eks.:
+Jeg brukte Fnuggs Search API til å søke på litt forskjellig ord og navn som f.eks.:
 
 - https://api.fnugg.no/search?q=oslo
 - https://api.fnugg.no/search?q=hemsedal
+- https://api.fnugg.no/search?q=skistar+hemsedal
 - https://api.fnugg.no/search?q=tryvann
 
 Det jeg oppdaget var at når jeg f.eks. søkte på hemsedal så jeg fikk opp flere sentere som inneholdt ordet hemsedal. Jeg tenkte umiddelbart at jeg kunne bruke dette til å la brukere søke på et *sted* og få opp skisenterne i nærheten av dette stedet. Det kan tenkes at brukere ønsker å sammenlikne forholdene på skisentere i et område, eller å bruke søkemotoren som et slags oppslagsverk for å se hvilke sentere som finnes i et område. Jeg begynte å implementere løsningen på denne måten ved å bruke en `$.each(response, function(key, value) {}` for å loope gjennom og hente ut data for hvert skisentere i resultatet. Det fungerte også å søke på bestemte skisentere. Dersom jeg søkte på Skistar Hemsedal så fikk jeg opp resultatet for det skisenteret og bare det.
@@ -129,10 +132,15 @@ Siden resultatene fra Autocomplete API ikke inneholder noen Id tilknyttet søkef
 
 Selve søkefeltet har jeg gitt en hvit bakgrunn for å vise tydelig frem at dette er et søkefelt.
 
-text-decoration: underline på navnet på skisenteret i søkeresultatet. Helt umulig å vite at det er en lenke siden fargen- og størrelsen
+`text-decoration: underline` på navnet på skisenteret i søkeresultatet. Helt umulig å vite at det er en lenke siden fargen- og størrelsen
 er lik vanlig tekst.
+
+## Responsivhet og kompabilitet
+
+Testet i flere nye chrome, safari og firefox nettlesere.
+tre breakpoints 0px, 640px og 1020px.
 
 ## Verktøy
 
-I dette prosjketet har jeg brukt npm, uglify til å konkatenere og minifisere javascript og sass.
+I dette prosjketet har jeg brukt npm som task runner, uglify til å konkatenere og minifisere javascript og sass.
 
