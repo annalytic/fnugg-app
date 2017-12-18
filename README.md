@@ -1,5 +1,7 @@
 # fnugg-app :snowflake:
 
+Demo: https://annalytic.github.io/fnugg-app
+
 ## Oppgaven
 Oppgaven går ut på å lage en enkel app for å vise ski- og værforholdene for et bestemt skisenter i Norge. Vi skal bruke Fnugg.nos API (https://api.fnugg.no/) til å hente data fra de forskjellige skisenterne. Datene kan enten presenteres direkte til brukeren eller vi kan bruke Fnugg widget (https://www.fnugg.no/widget/resort).
 
