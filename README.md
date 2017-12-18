@@ -1,7 +1,7 @@
 # fnugg-app :snowflake:
 
 ## Oppgaven
-Oppgaven går ut på å lage en enkel app for å vise ski- og værforholdene for et bestemt skisenter i Norge. Vi skal bruke Fnugg.nos API (https://api.fnugg.no/) for å hente data fra de forskjellige skisenterne. Datene kan enten presenteres direkte til brukerne eller vi kan bruke Fnugg widget (https://www.fnugg.no/widget/resort).
+Oppgaven går ut på å lage en enkel app for å vise ski- og værforholdene for et bestemt skisenter i Norge. Vi skal bruke Fnugg.nos API (https://api.fnugg.no/) til å hente data fra de forskjellige skisenterne. Datene kan enten presenteres direkte til brukerne eller vi kan bruke Fnugg widget (https://www.fnugg.no/widget/resort).
 
 Appen skal ha grunnleggende UX-funksjonalitet for å finne skisentere. Den skal være responsiv og kompatibel med alle moderne nettlesere.
 
@@ -84,9 +84,13 @@ Denne filen håndterer det som skjer når formularet sendes. Vi ønsker nemlig i
 
 ##### displayinfo.js
 
-Basert på valget som brukeren tar og verdien som sendes fra input-feltet så 
+Basert på valget som brukeren tar og verdien som sendes fra input-feltet så utføres det en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved bruk av jQuery append.
 
 ##### displaywidget.js
+
+Displaywidget.js gjør mye av det samme som `displayinfo.js`, bortsett fra at istedenfor å skrive ut masse HTML så skrives det ut en iframe.
+
+For å se denne istedenfor egengenerert resultat må man fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
 
 ##### progressbar.js
 
@@ -108,17 +112,17 @@ Jeg brukte Fnuggs Search API til å skrive inn og søke på litt forskjellig som
 
 Det jeg oppdaget var at når jeg f.eks. søkte på hemsedal så jeg fikk opp flere sentere som inneholdt ordet hemsedal. Jeg tenkte umiddelbart at jeg kunne bruke dette til å la brukere søke på et *sted* og få opp skisenterne i nærheten av dette stedet. Det kan tenkes at brukere ønsker å sammenlikne forholdene på skisentere i et område, eller å bruke søkemotoren som et slags oppslagsverk for å se hvilke sentere som finnes i et område. Jeg begynte å implementere løsningen på denne måten ved å bruke en `$.each(response, function(key, value) {}` for å loope gjennom og hente ut data for hvert skisentere i resultatet. Det fungerte også å søke på bestemte skisentere. Dersom jeg søkte på Skistar Hemsedal så fikk jeg opp resultatet for det skisenteret og bare det.
 
-Jeg la til en tekst på søkeresultatsiden som viste hva brukeren hadde søkt på. Selv om dette står i søkefeltet så er det enkelte brukere som ikke forventer at søkefeltet skal huske det hun/han har søkt på, men forventer at dette står over søkeresultatet. Siden dette står i søkefeltet som er nokså stort og sentralt på siden mener jeg det er overflødig å gjenta det rett under, og kan derfor fjernes. Jeg har likevel valgt å la det stå der i den endelige løsningen.
+Jeg la til en tekst på søkeresultatsiden som viste hva brukeren hadde søkt på. Selv om dette står i søkefeltet allerede så er det enkelte brukere som allikevel forventer at dette står over søkeresultatet. Siden dette står i søkefeltet som er nokså stort og sentralt på siden mener jeg det er overflødig å gjenta det rett under, og kan derfor fjernes. Jeg har likevel valgt å la det stå der i den endelige løsningen.
 
 Jeg la i utgangspunktet også til en søkeknapp til høyre for søkefeltet fordi forskning viser at det resulterer i at *flere* brukere får en bedre brukeropplevelse. Mange brukere forventer at med et søkefelt så følger det en søkeknapp.
 
 Jeg trodde løsningen min var vanntett helt til jeg søkte på "Oslo skisenter". Oslo skisenter er det faktiske navnet på et skisenter, og jeg forventet derfor og kun få opp ett søkeresultat. Men det jeg fikk var seks ulike skisentere som alle inneholdt ordet "skisenter" (https://api.fnugg.no/search?sourceFields=name&q=oslo+skisenter) Og verst av alt, disse senterne lå absolutt ikke i nærheten av hverandre. Etterhvert oppdaget jeg flere slike resultater. Jeg forsøkte å finne noe om hvordan dette Search APIet fungerte, uten hell. 
 
-Etter mye frustrasjon endte jeg opp med å gå bort fra frisøk, mao. tvinge brukeren til å velge et av skisenterne i søkeforslaget. Dersom brukeren forsøker å søke på noe annet enn søkeforslagene skjer det ikke ingenting.
+Etter mye frustrasjon endte jeg opp med å gå bort fra frisøk, mao. tvinge brukeren til å velge et av skisenterne blant søkeforslagene. Dersom brukeren forsøker å søke på noe annet enn søkeforslagene skjer det ikke ingenting.
 
-Ettersom jeg har lagt til rette for "search on selection" så er det ikke lenger behov for en submit-knapp. Denne har ingen funksjonen siden brukeren tvinges til å velge et av alternativene i søkeforslaget. Jeg reagerer på at på fnugg.no sine sider så har de et søkeikon til høyre for søkefeltet uten noen funksjon! Denne burde fjernes.
+Ettersom jeg har lagt til rette for "search on selection" så er det ikke lenger behov for en submit-knapp. Denne har ingen funksjonen siden brukeren tvinges til å velge et av alternativene i søkeforslaget. Jeg reagerer på at på fnugg.no sine sider så har de et søkeikon til høyre for søkefeltet uten noen funksjon. Denne burde fjernes.
 
-Siden resultatene fra Autocomplete API ikke inneholder noen Id tilknyttet søkeforslagene så har vi ingen måte å matche på Id når vi henter ut skisenter fra Search API. Det eneste vi kan matche på er navn. Som jeg trakk frem i avsnittet ovenfor så får man ikke alltid tilbake ett resultat selv om man skriver navnet på skisenteret ordrett. Selv om vi iblant får flere skisentere i søkeresultat som burde gitt ett skisenter, så ser det ut til at det første i søkeresultatet vanligvis matcher nokså godt med søkeordet. Jeg har derfor valgt å hente ut det første objektet i arrayen som er søkeresultatet. 
+Siden resultatene fra Autocomplete API ikke inneholder noen Id tilknyttet søkeforslagene så har vi ingen måte å matche på Id når vi henter ut skisenter fra Search API. Det eneste vi kan matche på er navn. Som jeg trakk frem i avsnittet ovenfor så får man ikke alltid tilbake ett resultat selv om man skriver navnet på skisenteret ordrett. Selv om vi iblant får flere skisentere i søkeresultat som burde gitt ett skisenter, så ser det ut til at det første i søkeresultatet vanligvis matcher nokså godt med søkeordet. Jeg har derfor valgt å hente ut det første objektet i arrayen/søkeresultatet. 
 
 
 ## Design og UX
