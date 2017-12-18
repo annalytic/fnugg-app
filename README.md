@@ -77,7 +77,7 @@ Autocompletes parameter `success` håndterer det som skjer etter brukeren har va
 ##### autocomplete-vanillajs.js
 Før jeg bestemte meg for å bruke jQuery UI's autocomplete forsøkte jeg meg på å lage min egen autocomplete i vanilla js. Selv om jeg ikke endte opp med å gå for (den delvis fungerende) løsningen valgte jeg likevel å ha den med her. Jeg bruker HTML5 `datalist`-elementet for å presentere foreslåtte søkeresultater. Årsaken til hvorfor jeg valgte å gå bort fra løsningen er pga. den dårlige støtten, samt manglene rundt events for `options`-elementene. Uten å kunne binde handling til når brukeren velger et av alternativene, må brukeren nå trykke enter to ganger, eller først velge alternativet med musepekeren, også trykke enter for å sende forespørselen.
 
-Lenke til løsning med vanilla js autocomplete: 
+For å se løsning fjern kommentaren for autocomplete-vanillajs.js i bunnen av body.
 
 ##### search.js
 Denne filen håndterer det som skjer når formularet sendes. Vi ønsker nemlig ikke at formularet skal sendes, men å vise frem resultatet av skisenteret brukeren søker på. For å få til det har vi sagt `event.preventDefault()` som hindrer formularet i å utføre standard handling, og ber den om å kjøre funksjonen `displayInfo()` istedenfor, som ligger i filen `displayinfo.js`.
@@ -91,7 +91,6 @@ Basert på valget som brukeren tar og verdien som sendes fra input-feltet så
 ##### progressbar.js
 
 Jeg har laget en egen js-fil for å lage canvas for prosentandel av skiheiser og skiløyper som er åpne.
-
 
 #### src/sass
 
