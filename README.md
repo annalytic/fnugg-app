@@ -71,23 +71,23 @@ Jeg har brukt jQuery UI's widget **Autocomplete** til å presentere søkeforslag
 
 Fnuggs Autocomplete API fungerer på følgende måte: Hvis brukeren f.eks. skriver *"Fje"* vil APIet returnere alle skisentere med navn som begynner på *"Fje"* i JSON-format (Gå til https://api.fnugg.no/suggest/autocomplete?q=Fje for å se resultatet av denne forespørselen).
 
-Resultatet inneholder masse informasjon som jeg ikke er interessert i. For å hente ut dataen jeg trenger legger jeg ved disse variablene i forespørselen: `?sourceFields=name,urls,conditions`. Resultatet gir oss *antall treff, navn, og site-path* for hvert skisenter. Dersom resultatet hadde gitt oss `id` kunne vi ha gitt brukeren et mere nøyaktig resultat. Les mer om hva jeg mener med dette i `displayinfo.js` og **Diskusjon**.
+Resultatet inneholder masse informasjon som jeg ikke er interessert i. For å hente ut data jeg trenger legger jeg ved disse variablene i forespørselen: `?sourceFields=name,urls,conditions`. Resultatet gir oss *antall treff, navn, og site-path* for hvert skisenter. Dersom resultatet hadde gitt oss `id` kunne vi ha gitt brukeren et mer nøyaktig resultat. Les mer om hva jeg mener med dette i `displayinfo.js` og **Diskusjon**.
 
 Basert på det brukeren skriver i søkefeltet utføres en AJAX-forespørsel der navnet på skisenterne hentes ut og legges i en array. Denne arrayen mates så tilbake til autocomplete som viser listen til brukeren. Jeg har brukt jQuery for å gjøre AJAX-forespørselen. Fordelen med å bruke jQuery er at man ikke må ta stilling til alle HTTP-statuskoder, og håndtere eventuelle HTTP-feil som kan resultere fra forspørselen.
 
 Autocompletes parameter `success` håndterer det som skjer etter brukeren har valgt et av alternativene. Når brukeren har valgt et alternativ forteller vi autocomplete at formularet skal sendes ved å si `$('form').submit()`. Filen `search.js` tar seg av det som skjer når formularet sendes. 
 
 ##### autocomplete-vanillajs.js
-Før jeg bestemte meg for å bruke jQuery UI's autocomplete forsøkte jeg meg på å lage min egen autocomplete i vanilla js. Selv om jeg ikke endte opp med å gå for (den delvis fungerende) løsningen valgte jeg likevel å ha den med her. Jeg brukte HTML5 `datalist`-elementet for å presentere foreslåtte søkeresultater. Årsaken til hvorfor jeg valgte å gå bort fra løsningen var grunnet den dårlige støtten, samt manglene rundt eventhandlers for `options`-elementene. Løsningen slik den er nå krever at brukeren må trykke enter to ganger for å søke.
+Før jeg bestemte meg for å bruke jQuery UI's autocomplete prøvde jeg meg på å lage min egen autocomplete i vanilla js. Selv om jeg ikke endte opp med å gå for (den delvis fungerende) løsningen valgte jeg likevel å ha den med her. Jeg brukte HTML5 `datalist`-elementet for å presentere foreslåtte søkeresultater. Årsaken til hvorfor jeg valgte å gå bort fra løsningen var grunnet den dårlige støtten for datalist, samt manglene rundt eventhandlers for `options`-elementene. Løsningen slik den er nå krever at brukeren må trykke enter to ganger for å søke.
 
-For å se løsning fjern kommentaren for `autocomplete-vanillajs.js` i bunnen av `body`. Dette forutsetter at man kloner repoet og kjører det på lokal server.
+For å se løsningen mp du fjerne kommentaren rundt `autocomplete-vanillajs.js` i bunnen av `body`. Dette forutsetter at du kloner repoet og kjører det på lokal server.
 
 ##### search.js
-Denne filen håndterer det som skjer når formularet sendes. Vi ønsker ikke at formularet skal sendes når brukeren trykker enter, men at resultatet av søket skal presenteres. Jeg har brukt `event.preventDefault()` for å hindre formularet i å utføre standard handling, og sier istedenfor: kjør funksjonen `displayInfo()`, som ligger i filen `displayinfo.js`.
+Denne filen håndterer det som skjer når formularet sendes. Vi ønsker ikke at formularet skal sendes når brukeren trykker enter, men at resultatet av søket skal presenteres. Jeg har brukt `event.preventDefault()` for å hindre formularet i å utføre standard handling, og ber programmet istedenfor å kjøre funksjonen `displayInfo()`, som ligger i filen `displayinfo.js`.
 
 ##### displayinfo.js
 
-Basert på søkeforslaget brukeren velger `input`-feltet utføres en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved bruk av jQuery `append`.
+Basert på søkeforslaget brukeren velger kjøres en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved hjelp av jQuery `append`.
 
 https://codebeautify.org/jsonviewer JSON Treeviewer var til stor hjelp i jobben med å finne hvilke keys jeg skulle ha tak i.
 
@@ -97,11 +97,11 @@ APIet inneholdt ingen værikoner og værstatusmeldingene var på engelsk. Jeg m�
 
 `displaywidget.js` gjør mye av det samme som `displayinfo.js`, men istedenfor å generere masse diver genererer den en iframe.
 
-For å se resultatet må man fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
+For å se resultatet må du fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
 
 ##### progressbar.js
 
-Jeg har laget en egen js-fil for å lage canvas for prosentandel av skiheiser og skiløyper som er åpne.
+Jeg har laget en egen js-fil for å lage `canvas` for prosentandel av skiheiser og skiløyper som er åpne.
 
 #### src/sass
 
@@ -113,7 +113,7 @@ Ber git ignorerer mappen  `/node_modules`.
 
 ## Diskusjon
 
-Jeg begynte prosjektet uten å sette meg mye inn i hvordan Fnugg sin søkemotor fungerer. Jeg ville lage en søkemotor etter beste mulig evne basert på det jeg så for meg brukeren ønsket av informasjon og det jeg kunne få tak i via APIet. 
+Jeg begynte prosjektet uten å sette meg for mye inn i hvordan Fnugg sin søkemotor fungerer. Jeg ville lage en søkemotor etter beste mulig evne basert på det jeg så for meg brukeren ønsket av informasjon og det jeg kunne få tak i via APIet. 
 
 Jeg brukte Fnuggs Search API til å søke på litt forskjellig ord og navn som f.eks.:
 
@@ -122,7 +122,7 @@ Jeg brukte Fnuggs Search API til å søke på litt forskjellig ord og navn som f
 - https://api.fnugg.no/search?q=skistar+hemsedal
 - https://api.fnugg.no/search?q=tryvann
 
-Når jeg søkte på f.eks. *hemsedal* så jeg fikk opp flere skisentere som inneholdt ordet *hemsedal*. Jeg tenkte umiddelbart at jeg kunne bruke dette til å la brukere søke på et *sted* og få opp skisenterne i nærheten av dette stedet. Det kan tenkes at brukere ønsker å sammenlikne forholdene på skisentere i et område, eller å bruke søkemotoren som et slags oppslagsverk for å se hvilke sentere som finnes i i et gitt område. Jeg begynte å implementere løsningen på denne måten ved å bruke en `$.each(response, function(key, value) {}` for å loope gjennom og hente ut data for hvert skisentere i resultatet. Det fungerte også å søke på bestemte skisentere. Dersom jeg søkte på *Skistar Hemsedal* fikk jeg opp resultatet for det skisenteret og bare det.
+Når jeg søkte på f.eks. *hemsedal* fikk jeg opp flere skisentere som inneholdt ordet *hemsedal*. Jeg tenkte umiddelbart at jeg kunne bruke dette til å gi brukere mulighet til å søke på et *sted/navn* og få opp skisenterne i nærheten av dette stedet. Det kan tenkes at brukere ønsker å sammenlikne forholdene på skisentere i et område, eller å bruke søkemotoren som et slags oppslagsverk for å se hvilke sentere som finnes i i et gitt område. Jeg begynte å implementere løsningen på denne måten ved å bruke en `$.each(response, function(key, value) {}` for å loope gjennom og hente ut data for hvert skisentere i resultatet. Det fungerte også å søke på bestemte skisentere. Dersom jeg søkte på *Skistar Hemsedal* fikk jeg opp resultatet for det skisenteret og bare det.
 
 Jeg la til en tekst på søkeresultatsiden som viste hva brukeren hadde søkt på. Selv om dette står i søkefeltet allerede så er det enkelte brukere som likevel forventer at dette står over søkeresultatet. Siden søkefeltet er nokså stort og sentralt på siden mener jeg det er unødvendig å gjenta det rett under, og derfor kan fjernes. Jeg har likevel valgt å la det stå der i den endelige løsningen.
 
