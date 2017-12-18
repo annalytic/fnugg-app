@@ -8,7 +8,7 @@
     "uglify-js": "^3.2.2"
   },
   "scripts": {
-    "uglify": "uglifyjs src/js/getinfo.js src/js/autocomplete.js -m -c -o dist/app.js",
+    "uglify": "uglifyjs src/js/displayinfo.js src/js/displaywidget.js src/js/progressbar.js src/js/search.js -m -c -o dist/app.js",
     "sass": "sass --watch src/sass/style.scss:dist/style.css"
   },
   "author": "Anna Li",
