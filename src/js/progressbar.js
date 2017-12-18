@@ -1,4 +1,9 @@
-// Progress bar
+/**
+*   PROGRESSBAR.JS
+*
+*   Creates circular progress bar using HTML5 canvas element for
+*   displaying percentage of slopes and lifts that are open at a specific skiresort.
+**/
 
 function createCanvas(percentage) {
   var canvas = document.createElement('canvas');
