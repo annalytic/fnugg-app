@@ -14,9 +14,6 @@ I denne filen vil jeg
 
 ```
 api-case
-  /dist
-        app.js
-        style.css
   /src
         /assets
         /js
@@ -42,6 +39,7 @@ api-case
             style.scss
   index.html
   package.json
+  .gitignore
 ```
 
 ### index.html
@@ -51,10 +49,6 @@ I `head` er det inkludert flere stylesheets. Hovedstylesheetet heter `style.css`
 I body-taggen er det et `form`-element som holder på et `input`-felt for søk. Jeg tok i utgangspunktet med `sumbit`-knapp også, men har kommentert ut denne. Les under "Design og UX" for hvorfor.
 
 I div-elementet med id `content` er det en div `welcome` som viser en kort velkomsttekst og logoen til Fnugg. Ved et søk vil denne div'en fjernes og erstattes med `resort-results` som viser resultatet av søket.
-
-### /dist
-
-Javascript og CSS for hele prosjektet etter minifisering og konkatenering.
 
 ### /src
 
@@ -105,6 +99,10 @@ Jeg har laget en egen js-fil for å lage canvas for prosentandel av skiheiser og
 #### src/sass
 
 Modularisert sass-kode ligger i mappene components og base. `components` holder stilsett for komponenter som søkefelt, widget, og `base` inneholder normalize og variabler.
+
+### .gitignore
+
+Ber git ignorerer mappen `/dist` som inneholder konkatenert og minifisert javascript og sass og `node_modules`.
 
 ## Diskusjon
 
