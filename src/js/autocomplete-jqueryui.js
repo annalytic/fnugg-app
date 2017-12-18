@@ -2,9 +2,7 @@
 *   AUTOCOMPLETE-JQUERYUI.JS
 *
 *   Uses jQuery UI's "Autocomplete".
-*   (To see the partial working solution solved with Vanilla JS go to autocomplete-vanillajs.js)
-
-*   Directly feeds response of AJAX request to autocompletes "source" parameter
+*   Directly feeds response of AJAX request to autocompletes "source" parameter.
 **/
 
 $('#search').autocomplete({

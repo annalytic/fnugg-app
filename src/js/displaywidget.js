@@ -1,8 +1,9 @@
 /**
 *   DISPLAYWIDGET.JS
 *
-*   Uses Fnuggs Widget to display conditions for ski resorts.
-*   Based on what user searches for the function printWidget retrives the widget and displays it in iframe.
+*   Uses Fnuggs Widget to display conditions for a specific ski resorts.
+*   Based on what the user searches for the function printWidget retrives the widget
+*   based on id, and displays it in a iframe.
 **/
 
 function displayWidget() {

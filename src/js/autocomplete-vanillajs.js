@@ -1,9 +1,7 @@
 /**
-*
 *   AUTOCOMPLETE-VANILLAJS.JS
 *
 *   Creating own autocomplete using HTML5 datalist element and vanilla js.
-*
 **/
 
 // Get input element, and add a eventlistener for keyup.

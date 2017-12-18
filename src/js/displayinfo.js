@@ -1,9 +1,7 @@
 /**
-*
 *   DISPLAYINFO.JS
 *
-*   Desc
-*
+*   Displays info about specific ski resort on page based on name of ski resort.
 **/
 
 function displayInfo() {

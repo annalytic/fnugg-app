@@ -1,9 +1,7 @@
 /**
-*
 *   SEARCH.JS
 *
 *   This script handles the event when user clicks sumbit button.
-*
 **/
 
 $('form').submit(function(e) {
