@@ -7,13 +7,13 @@ Oppgaven går ut på å lage en enkel app for å vise ski- og værforholdene for
 
 Appen skal ha grunnleggende UX-funksjonalitet for å finne skisentere. Den skal være responsiv og kompatibel med alle moderne nettlesere.
 
-## README.md
-I denne filen vil jeg 
-
 ## Mappestruktur
 
 ```
 api-case
+  /dist
+        app.js
+        style.css
   /src
         /assets
         /js
@@ -43,12 +43,17 @@ api-case
 ```
 
 ### index.html
-Hovedsiden for appen. Den inneholder `html`, `head` og `body`. I `head` er det en rekke metatagger. Metatagger inneholder viktig informasjon om HTML-dokumentet, som f.eks. encoding, beskrivelse, forfatter og informasjon om nettleservinduet.
-I `head` er det inkludert flere stylesheets. Hovedstylesheetet heter `style.css`. Jeg har inkludert `jquery-ui.css` fordi jeg har tatt i bruk jQuery UI's Autocomplete widget.
+Hovedsiden for appen. Den inneholder `html`, `head` og `body`. `head` inneholder en rekke viktige metatagger med informasjon om HTML-dokumentet som f.eks. tittel, beskrivelse, informasjon om viewport.
 
-I body-taggen er det et `form`-element som holder på et `input`-felt for søk. Jeg tok i utgangspunktet med `sumbit`-knapp også, men har kommentert ut denne. Les under "Design og UX" for hvorfor.
+`head` inneholder to stilark, hovedstilarket `style.css` og `jquery-ui.css`.
 
-I div-elementet med id `content` er det en div `welcome` som viser en kort velkomsttekst og logoen til Fnugg. Ved et søk vil denne div'en fjernes og erstattes med `resort-results` som viser resultatet av søket.
+I `body` er det ett `form`-felt med tilhørende `input`-felt og `submit`-knapp.
+
+Div-elementet `welcome` viser en kort velkomsttekst og logoen til Fnugg. Ved søk vil denne fjernes fra DOM og erstattes med `resort-results` som viser resultatet av søket.
+
+
+### /dist
+Distribusjonsmappe som inneholder konkatenert og minifisert javascript og css.
 
 ### /src
 
@@ -57,56 +62,58 @@ Inneholder logo hentet fra http://fnugg.no og værsymboler hentet fra yr.no (htt
 
 #### /js
 
-For å gjøre det lettere for andre og meg selv å lese og forstå javascript-koden har jeg delt den opp i separate javascript-filer etter funksjonalitet. Jeg har forsøkt å gi dem selvforklarende filnavn.
+For å gjøre det lettere for andre og meg selv å lese og forstå javascript-koden har jeg delt den opp i separate javascript-filer etter funksjonalitet.
+
+Nedenfor følger kort forklaring av hva koden i de ulike filene gjør. Mer spesifikke kommentarer finner du i selve filene.
 
 ##### autocomplete-jqueryui.js
-Jeg har brukt jQuery UI's widget **Autocomplete** til å presentere forslag basert på det brukeren skriver i søkefeltet. Widgetens parameter `source` kan ta imot en streng, array eller funksjon(forespørsel, respons). Jeg har brukt den siste varianten til å utføre AJAX-forespørsel mot **Fnuggs Autocomplete API** (https://api.fnugg.no/suggest/autocomplete?q=).
+Jeg har brukt jQuery UI's widget **Autocomplete** til å presentere søkeforslag basert på det brukeren skriver i søkefeltet. Widgetens parameter `source` kan ta imot en streng, array eller funksjon(forespørsel, respons). Jeg har brukt den siste varianten til å utføre AJAX-forespørsel mot **Fnuggs Autocomplete API** (https://api.fnugg.no/suggest/autocomplete?q=).
 
-Fnuggs Autocomplete API fungerer på følgende måte: Si brukeren f.eks. skriver *"Fje"*, så vil APIet returnere alle skisentere med navn som begynner på *"Fje"* (Gå til https://api.fnugg.no/suggest/autocomplete?q=Fje for å se resultatet av denne forespørselen). Resultatet er i JSON-format.
+Fnuggs Autocomplete API fungerer på følgende måte: Hvis brukeren f.eks. skriver *"Fje"* vil APIet returnere alle skisentere med navn som begynner på *"Fje"* i JSON-format (Gå til https://api.fnugg.no/suggest/autocomplete?q=Fje for å se resultatet av denne forespørselen).
 
-Resultatet inneholder masse informasjon om hvert senter som jeg ikke er interessert i. For å hente ut relevant data har jeg lagt ved disse variablene i forespørselen: `?sourceFields=name,urls,conditions`. Resultatet gir oss antall treff, navn, og site-path for hvert skisenter. Det jeg skulle ønske resultatet ga meg var iden. Med id kunne vi gitt brukeren et mer nøyaktig resultat. Les mer om dette i `displayinfo.js` og Diskusjon.
+Resultatet inneholder masse informasjon som jeg ikke er interessert i. For å hente ut data jeg trenger legger jeg ved disse variablene i forespørselen: `?sourceFields=name,urls,conditions`. Resultatet gir oss *antall treff, navn, og site-path* for hvert skisenter. Dersom resultatet hadde gitt oss `id` kunne vi ha gitt brukeren et mer nøyaktig resultat. Les mer om hva jeg mener med dette i `displayinfo.js` og **Diskusjon**.
 
 Basert på det brukeren skriver i søkefeltet utføres en AJAX-forespørsel der navnet på skisenterne hentes ut og legges i en array. Denne arrayen mates så tilbake til autocomplete som viser listen til brukeren. Jeg har brukt jQuery for å gjøre AJAX-forespørselen. Fordelen med å bruke jQuery er at man ikke må ta stilling til alle HTTP-statuskoder, og håndtere eventuelle HTTP-feil som kan resultere fra forspørselen.
 
 Autocompletes parameter `success` håndterer det som skjer etter brukeren har valgt et av alternativene. Når brukeren har valgt et alternativ forteller vi autocomplete at formularet skal sendes ved å si `$('form').submit()`. Filen `search.js` tar seg av det som skjer når formularet sendes. 
 
 ##### autocomplete-vanillajs.js
-Før jeg bestemte meg for å bruke jQuery UI's autocomplete forsøkte jeg meg på å lage min egen autocomplete i vanilla js. Selv om jeg ikke endte opp med å gå for (den delvis fungerende) løsningen valgte jeg likevel å ha den med her. Jeg brukte HTML5 `datalist`-elementet for å presentere foreslåtte søkeresultater. Årsaken til hvorfor jeg valgte å gå bort fra løsningen er pga. den dårlige støtten, samt manglene rundt events for `options`-elementene. Uten å kunne binde handling til når brukeren velger et av alternativene, må brukeren slik som løsningen er nå trykke enter to ganger, eller først velge alternativet med musepekeren, også trykke enter for å sende forespørselen.
+Før jeg bestemte meg for å bruke jQuery UI's autocomplete prøvde jeg meg på å lage min egen autocomplete i vanilla js. Selv om jeg ikke endte opp med å gå for (den delvis fungerende) løsningen valgte jeg likevel å ha den med her. Jeg brukte HTML5 `datalist`-elementet for å presentere foreslåtte søkeresultater. Årsaken til hvorfor jeg valgte å gå bort fra løsningen var grunnet den dårlige støtten for datalist, samt manglene rundt eventhandlers for `options`-elementene. Løsningen slik den er nå krever at brukeren må trykke enter to ganger for å søke.
 
-For å se løsning fjern kommentaren for autocomplete-vanillajs.js i bunnen av body. Dette forutsetter at du kloner repoet og kjører det på lokal server.
+For å se løsningen mp du fjerne kommentaren rundt `autocomplete-vanillajs.js` i bunnen av `body`. Dette forutsetter at du kloner repoet og kjører det på lokal server.
 
 ##### search.js
-Denne filen håndterer det som skjer når formularet sendes. Vi ønsker ikke at formularet skal sendes, men at det skal resultatet av skisenteret brukeren søker på. For å få til det har vi sagt `event.preventDefault()` som hindrer formularet i å utføre standard handling, og ber den om å kjøre funksjonen `displayInfo()` istedenfor, som ligger i filen `displayinfo.js`.
+Denne filen håndterer det som skjer når formularet sendes. Vi ønsker ikke at formularet skal sendes når brukeren trykker enter, men at resultatet av søket skal presenteres. Jeg har brukt `event.preventDefault()` for å hindre formularet i å utføre standard handling, og ber programmet istedenfor å kjøre funksjonen `displayInfo()`, som ligger i filen `displayinfo.js`.
 
 ##### displayinfo.js
 
-Basert på valget som brukeren tar og verdien som sendes fra `input`-feltet utføres en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved bruk av jQuery `append`.
+Basert på søkeforslaget brukeren velger kjøres en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved hjelp av jQuery `append`.
 
-https://codebeautify.org/jsonviewer JSON Treeviewer var til stor nytte i jobben med å finne frem hvilke keys jeg ønsket å få tak i.
+https://codebeautify.org/jsonviewer JSON Treeviewer var til stor hjelp i jobben med å finne hvilke keys jeg skulle ha tak i.
 
-APIet tilbyr ikke værikoner eller værstatus på norsk. Jeg måtte derfor hente værikoner fra yr.no (http://om.yr.no/symbol/) og skrive ut værstatus på engelsk.
+APIet inneholdt ingen værikoner og værstatusmeldingene var på engelsk. Jeg måtte derfor hente værikoner fra yr.no (http://om.yr.no/symbol/).
 
 ##### displaywidget.js
 
 `displaywidget.js` gjør mye av det samme som `displayinfo.js`, men istedenfor å generere masse diver genererer den en iframe.
 
-For å se dette resultatet må man fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
+For å se resultatet må du fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
 
 ##### progressbar.js
 
-Jeg har laget en egen js-fil for å lage canvas for prosentandel av skiheiser og skiløyper som er åpne.
+Jeg har laget en egen js-fil for å lage `canvas` for prosentandel av skiheiser og skiløyper som er åpne.
 
 #### src/sass
 
-Modularisert sass-kode ligger i mappene components og base. `components` holder stilsett for komponenter som søkefelt, widget, og `base` inneholder normalize og variabler.
+Modularisert sass-kode ligger i mappene `/components` og `/base`. `/components` holder stilregler for komponenter som søkefelt, widget, og `base` inneholder normalize, variabler og typografi.
 
 ### .gitignore
 
-Ber git ignorerer mappen `/dist` som inneholder konkatenert og minifisert javascript og sass og `node_modules`.
+Ber git ignorerer mappen  `/node_modules`.
 
 ## Diskusjon
 
-Jeg begynte prosjektet uten å sette meg mye inn i hvordan Fnugg sin søkemotor fungerer. Jeg ville prøve å lage en søkemotor etter beste mulig evne basert på det jeg så for meg brukeren ønsket av informasjon og det jeg kunne få tak i via APIet. 
+Jeg begynte prosjektet uten å sette meg for mye inn i hvordan Fnugg sin søkemotor fungerer. Jeg ville lage en søkemotor etter beste mulig evne basert på det jeg så for meg brukeren ønsket av informasjon og det jeg kunne få tak i via APIet. 
 
 Jeg brukte Fnuggs Search API til å søke på litt forskjellig ord og navn som f.eks.:
 
@@ -115,35 +122,35 @@ Jeg brukte Fnuggs Search API til å søke på litt forskjellig ord og navn som f
 - https://api.fnugg.no/search?q=skistar+hemsedal
 - https://api.fnugg.no/search?q=tryvann
 
-Det jeg oppdaget var at når jeg f.eks. søkte på hemsedal så jeg fikk opp flere sentere som inneholdt ordet hemsedal. Jeg tenkte umiddelbart at jeg kunne bruke dette til å la brukere søke på et *sted* og få opp skisenterne i nærheten av dette stedet. Det kan tenkes at brukere ønsker å sammenlikne forholdene på skisentere i et område, eller å bruke søkemotoren som et slags oppslagsverk for å se hvilke sentere som finnes i et område. Jeg begynte å implementere løsningen på denne måten ved å bruke en `$.each(response, function(key, value) {}` for å loope gjennom og hente ut data for hvert skisentere i resultatet. Det fungerte også å søke på bestemte skisentere. Dersom jeg søkte på Skistar Hemsedal så fikk jeg opp resultatet for det skisenteret og bare det.
+Når jeg søkte på f.eks. *hemsedal* fikk jeg opp flere skisentere som inneholdt ordet *hemsedal*. Jeg tenkte umiddelbart at jeg kunne bruke dette å lage en søkemotor der brukeren kan søke på et *sted/navn* og få opp skisentere i nærheten av dette stedet. Det kan tenkes at brukere ønsker å sammenlikne forholdene på skisentere i et område, eller å bruke søkemotoren som et slags oppslagsverk for å se hvilke sentere som finnes i et bestemt område. Jeg begynte å implementere løsningen på denne måten ved å bruke en `$.each(response, function(key, value) {}` for å loope gjennom og hente ut data for hvert skisentere i resultatet. Det fungerte også å søke på bestemte skisentere. Dersom jeg søkte på *Skistar Hemsedal* fikk jeg opp resultatet for det skisenteret og bare det.
 
-Jeg la til en tekst på søkeresultatsiden som viste hva brukeren hadde søkt på. Selv om dette står i søkefeltet allerede så er det enkelte brukere som allikevel forventer at dette står over søkeresultatet. Siden dette står i søkefeltet som er nokså stort og sentralt på siden mener jeg det er overflødig å gjenta det rett under, og kan derfor fjernes. Jeg har likevel valgt å la det stå der i den endelige løsningen.
+Jeg la til en tekst på søkeresultatsiden som viste hva brukeren hadde søkt på. Selv om dette står i søkefeltet allerede så er det enkelte brukere som likevel forventer at dette står over søkeresultatet. Siden søkefeltet er nokså stort og sentralt på siden mener jeg det er unødvendig å gjenta det rett under, og derfor kan fjernes. Jeg har likevel valgt å la det stå der i den endelige løsningen.
 
-Jeg la i utgangspunktet også til en søkeknapp til høyre for søkefeltet fordi forskning viser at det resulterer i at *flere* brukere får en bedre brukeropplevelse. Mange brukere forventer at med et søkefelt så følger det en søkeknapp.
+Jeg la i utgangspunktet også til en søkeknapp til høyre for søkefeltet fordi forskning viser at det resulterer i at *flere* brukere får en god brukeropplevelse. Mange brukere forventer at med et søkefelt så følger det en søkeknapp.
 
-Jeg trodde løsningen min var vanntett helt til jeg søkte på "Oslo skisenter". Oslo skisenter er det faktiske navnet på et skisenter, og jeg forventet derfor og kun få opp ett søkeresultat. Men det jeg fikk var seks ulike skisentere som alle inneholdt ordet "skisenter" (https://api.fnugg.no/search?sourceFields=name&q=oslo+skisenter) Og verst av alt, disse senterne lå absolutt ikke i nærheten av hverandre. Etterhvert oppdaget jeg flere slike resultater. Jeg forsøkte å finne noe om hvordan dette Search APIet fungerte, uten hell. 
+Jeg trodde løsningen min var vanntett helt til jeg søkte på *Oslo skisenter*. Oslo skisenter er det faktiske navnet på ett skisenter, og jeg forventet derfor og kun få opp ett søkeresultat. Men det jeg fikk var seks ulike skisentere som alle inneholdt ordet "skisenter" (https://api.fnugg.no/search?sourceFields=name&q=oslo+skisenter) Flere av skisenterne lå heller ikke i nærheten av hverandre. Etterhvert oppdaget jeg flere slike *corner-cases*. Jeg forsøkte å finne noe om hvordan Search APIet fungerte, uten hell. En søkemotor der brukeren kan søke fritt og få resultater som enten inneholder ordet eller skisentere i nærheten av området som søkes på tror jeg hadde vært svært attaktivt og nyttig for mange. Dessverre måtte jeg gå bort fra denne løsningen da jeg merket at APIet returnerte masse ymse resultater som ikke hang helt på greip i flere tilfeller.
 
-Etter mye frustrasjon endte jeg opp med å gå bort fra frisøk, mao. tvinge brukeren til å velge et av skisenterne blant søkeforslagene. Dersom brukeren forsøker å søke på noe annet enn søkeforslagene skjer det ikke ingenting.
+Etter mye frustrasjon endte jeg opp med å gå bort fra frisøk, og gikk for en løsningen der brukeren må velge et av skisenterne blant søkeforslagene. Dersom brukeren forsøker å søke på noe annet enn søkeforslagene skjer det ikke ingenting.
 
 Ettersom jeg har lagt til rette for "search on selection" så er det ikke lenger behov for en submit-knapp. Denne har ingen funksjonen siden brukeren tvinges til å velge et av alternativene i søkeforslaget. Jeg reagerer på at på fnugg.no sine sider så har de et søkeikon til høyre for søkefeltet uten noen funksjon. Denne burde fjernes.
 
-Siden resultatene fra Autocomplete API ikke inneholder noen Id tilknyttet søkeforslagene så har vi ingen måte å matche på Id når vi henter ut skisenter fra Search API. Det eneste vi kan matche på er navn. Som jeg trakk frem i avsnittet ovenfor så får man ikke alltid tilbake ett resultat selv om man skriver navnet på skisenteret ordrett. Selv om vi iblant får flere skisentere i søkeresultat som burde gitt ett skisenter, så ser det ut til at det første i søkeresultatet vanligvis matcher nokså godt med søkeordet. Jeg har derfor valgt å hente ut det første objektet i arrayen/søkeresultatet. 
+Siden resultatene fra Autocomplete API ikke inneholder noen id tilknyttet søkeforslagene så har vi ingen måte å matche på id når vi henter ut skisenter fra Search API. Det eneste vi kan matche på er navn. Som jeg trakk frem i avsnittet ovenfor så får man ikke alltid tilbake ett resultat selv om man skriver navnet på skisenteret ordrett. Selv om vi iblant får flere skisentere i søkeresultatet som burde ha gitt ett skisenter, så ser det ut til at det første i søkeresultatet vanligvis matcher nokså godt med søkeordet. Jeg har derfor valgt å hente ut det første objektet i arrayen/søkeresultatet. 
 
+Hadde jeg skrevet javascript-koden på nytt hadde jeg samlet alle AJAX-forespørseler i en javascript-fil med url og parametere som input-parametere til en funksjon som utfører forespørselen. Jeg hadde deretter brukt deffered og promises som when() og then() til å håndtere svaret.
 
 ## Design og UX
 
-Selve søkefeltet har jeg gitt en hvit bakgrunn for å vise tydelig frem at dette er et søkefelt.
+Selve søkefeltet har jeg gitt en hvit bakgrunnsfarge for å vise tydelig frem at dette er et søkefelt.
 
-`text-decoration: underline` på navnet på skisenteret i søkeresultatet. Helt umulig å vite at det er en lenke siden fargen- og størrelsen
-er lik vanlig tekst.
+Jeg har også lagt til `text-decoration: underline` på navnet på skisenteret i søkeresultatet. Slik lenken ser ut i designet er det helt umulig å vite at det er en lenke siden fargen- og størrelsen er lik den vanlige teksten.
 
 ## Responsivitet og kompabilitet
 
-Til å teste appen har jeg benyttet meg av browserstack.com. Der kan man teste og kjøre appen i en rekke forskjellige nettlesere, både gamle og nye. Jeg har testet appen i flere versjoner av nettleserne Chrome, Safari, Firefox og IE11.
+Til å teste appen har jeg benyttet browserstack.com. Jeg har testet appen i flere versjoner av nettleserne Chrome, Safari, Firefox og IE11.
 
 Det er benyttet tre breakpoints: 0px, 640px og 1020px.
 
 ## Verktøy
 
-I dette prosjketet har jeg brukt npm som task runner. Uglify er brukt til å konkatenere og minifisere javascript og sass.
+I dette prosjketet har jeg brukt npm til å håndtere oppgaver. Uglify er benyttet til å konkatenere og minifisere javascript og sass.
 
