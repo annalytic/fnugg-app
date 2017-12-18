@@ -18,7 +18,7 @@ function displayInfo() {
     $('.content').empty();
     $('.content').append('<div class="resort-results"></div>');
     $('.resort-results').append('<span class="searched-for">Du søkte på: <strong>' + searchTerm + '</strong></span>');
-    $('.resort-results').append('<div class="resort-logo"><a href="/"><img src="../src/assets/img/logo/logo.svg" xmlns="http://www.w3.org/2000/svg"/></a></div>');
+    $('.resort-results').append('<div class="resort-logo"><a href="/"><img src="fnugg-app/src/assets/img/logo/logo.svg" xmlns="http://www.w3.org/2000/svg"/></a></div>');
 
     /*
     Since we want to only display the first result even if the AJAX-requests returns several responses, we have to get the first in the array.
@@ -41,7 +41,7 @@ function displayInfo() {
 
     // Column: Weather symbol
     $('.resort-stats').append('<div class="resort-stats-column resort-stats-weather">'
-    + '<img src="../src/assets/img/weather-icons/png/' + info._source.conditions.combined.top.symbol.yr_id + '.png">'
+    + '<img src="fnugg-app/src/assets/img/weather-icons/svg/' + info._source.conditions.combined.top.symbol.yr_id + '.svg" xmlns="http://www.w3.org/2000/svg">'
     + '<span>' + info._source.conditions.combined.top.symbol.name + '</span>'
     + '</div>');
 
