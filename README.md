@@ -90,6 +90,8 @@ Basert på valget som brukeren tar og verdien som sendes fra `input`-feltet utf�
 
 https://codebeautify.org/jsonviewer JSON Treeviewer var til stor nytte i jobben med å finne frem hvilke keys jeg ønsket å få tak i.
 
+APIet tilbyr ikke værikoner eller værstatus på norsk. Jeg måtte derfor hente værikoner fra yr.no (http://om.yr.no/symbol/) og skrive ut værstatus på engelsk.
+
 ##### displaywidget.js
 
 `displaywidget.js` gjør mye av det samme som `displayinfo.js`, men istedenfor å generere masse diver genererer den en iframe.
@@ -137,12 +139,13 @@ Selve søkefeltet har jeg gitt en hvit bakgrunn for å vise tydelig frem at dett
 `text-decoration: underline` på navnet på skisenteret i søkeresultatet. Helt umulig å vite at det er en lenke siden fargen- og størrelsen
 er lik vanlig tekst.
 
-## Responsivhet og kompabilitet
+## Responsivitet og kompabilitet
 
-Testet i flere nye chrome, safari og firefox nettlesere.
-tre breakpoints 0px, 640px og 1020px.
+Til å teste appen har jeg benyttet meg av browserstack.com. Der kan man teste og kjøre appen i en rekke forskjellige nettlesere, både gamle og nye. Jeg har testet appen i flere versjoner av nettleserne Chrome, Safari, Firefox og IE11.
+
+Det er benyttet tre breakpoints: 0px, 640px og 1020px.
 
 ## Verktøy
 
-I dette prosjketet har jeg brukt npm som task runner, uglify til å konkatenere og minifisere javascript og sass.
+I dette prosjketet har jeg brukt npm som task runner. Uglify er brukt til å konkatenere og minifisere javascript og sass.
 
