@@ -64,6 +64,8 @@ Inneholder logo hentet fra http://fnugg.no og værsymboler hentet fra yr.no (htt
 
 For å gjøre det lettere for andre og meg selv å lese og forstå javascript-koden har jeg delt den opp i separate javascript-filer etter funksjonalitet.
 
+Nedenfor følger en forklaring av hva de koden i de ulike filene gjør. Mer spesifikke kommentarer finner du i selve filene.
+
 ##### autocomplete-jqueryui.js
 Jeg har brukt jQuery UI's widget **Autocomplete** til å presentere søkeforslag basert på det brukeren skriver i søkefeltet. Widgetens parameter `source` kan ta imot en streng, array eller funksjon(forespørsel, respons). Jeg har brukt den siste varianten til å utføre AJAX-forespørsel mot **Fnuggs Autocomplete API** (https://api.fnugg.no/suggest/autocomplete?q=).
 
