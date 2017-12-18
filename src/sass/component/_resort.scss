@@ -97,12 +97,11 @@
     font-size: 1.6em;
     text-align: center;
     margin-top: 30px;
-    display: flex;
-    justify-content: center;
+
 
     span {
       position: absolute;
-      -ms-transform:translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
       -webkit-transform:translate(-50%, -50%);
       -moz-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
