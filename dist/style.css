@@ -447,9 +447,15 @@ input[type="submit"] {
     margin-top: 30px; }
     .resort-lifts-slopes__no span {
       position: absolute;
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%); }
     .resort-lifts-slopes__no canvas {
       position: absolute;
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%); }
   .resort-lifts-slopes__ratio {
     position: absolute;
