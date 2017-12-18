@@ -444,7 +444,9 @@ input[type="submit"] {
   .resort-lifts-slopes__no {
     font-size: 1.6em;
     text-align: center;
-    margin-top: 30px; }
+    margin-top: 30px;
+    display: flex;
+    justify-content: center; }
     .resort-lifts-slopes__no span {
       position: absolute;
       -ms-transform: translate(-50%, -50%);
@@ -553,7 +555,7 @@ input[type="submit"] {
 
 * {
   box-sizing: border-box;
-  overflow-x: hidden; }
+  overflow: hidden; }
 
 body {
   background-color: #292929;
