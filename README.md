@@ -1,4 +1,5 @@
 # fnugg-app :snowflake:
+
 ## Oppgaven
 Oppgaven går ut på å lage en enkel app for å vise ski- og værforholdene for et bestemt skisenter i Norge. Vi skal bruke Fnugg.nos API (https://api.fnugg.no/) for å hente data fra de forskjellige skisenterne. Datene kan enten presenteres direkte til brukerne eller vi kan bruke Fnugg widget (https://www.fnugg.no/widget/resort).
 
@@ -83,7 +84,7 @@ Denne filen håndterer det som skjer når formularet sendes. Vi ønsker nemlig i
 
 ##### displayinfo.js
 
-Basert 
+Basert på valget som brukeren tar og verdien som sendes fra input-feltet så 
 
 ##### displaywidget.js
 
@@ -118,14 +119,10 @@ Etter mye frustrasjon endte jeg opp med å gå bort fra frisøk, mao. tvinge bru
 
 Ettersom jeg har lagt til rette for "search on selection" så er det ikke lenger behov for en submit-knapp. Denne har ingen funksjonen siden brukeren tvinges til å velge et av alternativene i søkeforslaget. Jeg reagerer på at på fnugg.no sine sider så har de et søkeikon til høyre for søkefeltet uten noen funksjon! Denne burde fjernes.
 
-
-
-
+Siden resultatene fra Autocomplete API ikke inneholder noen Id tilknyttet søkeforslagene så har vi ingen måte å matche på Id når vi henter ut skisenter fra Search API. Det eneste vi kan matche på er navn. Som jeg trakk frem i avsnittet ovenfor så får man ikke alltid tilbake ett resultat selv om man skriver navnet på skisenteret ordrett. Selv om vi iblant får flere skisentere i søkeresultat som burde gitt ett skisenter, så ser det ut til at det første i søkeresultatet vanligvis matcher nokså godt med søkeordet. Jeg har derfor valgt å hente ut det første objektet i arrayen som er søkeresultatet. 
 
 
 ## Design og UX
-
-Fnugg har søkeikon, dårlig ux burde fjerne denne for å ikke forvirre brukeren. Den har ingen funksjon.
 
 Selve søkefeltet har jeg gitt en hvit bakgrunn for å vise tydelig frem at dette er et søkefelt.
 
@@ -136,4 +133,3 @@ er lik vanlig tekst.
 
 I dette prosjketet har jeg brukt npm, uglify til å konkatenere og minifisere javascript og sass.
 
-## 
