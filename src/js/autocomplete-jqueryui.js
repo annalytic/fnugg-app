@@ -50,6 +50,12 @@ $('#search').autocomplete({
   // Search the selection on selection/enter
   select: function(event, ui) {
     $('#search').val(ui.item.value);
+    $('#search').keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
     $('form').submit();
   }
   // Closes suggestion menu on keypress "enter"

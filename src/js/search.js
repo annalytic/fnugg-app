@@ -19,11 +19,3 @@ $('form').submit(function(e) {
    // Uncomment/comment to displays result using Fnugg Widget
    // displayWidget();
 });
-
-// Prevents user from submitting form when hitting enter key
-$('#search').keydown(function(event){
-  if(event.keyCode == 13) {
-    event.preventDefault();
-    return false;
-  }
-});

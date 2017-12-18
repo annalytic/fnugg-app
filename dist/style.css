@@ -493,6 +493,8 @@ input[type="submit"] {
     flex: 0 1 20%; } }
 .welcome {
   text-align: center; }
+  .welcome h1 {
+    font-size: 1.1em; }
   .welcome img {
     max-width: 260px; }
   .welcome p {
