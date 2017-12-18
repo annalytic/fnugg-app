@@ -1,7 +1,7 @@
 # fnugg-app :snowflake:
 
 ## Oppgaven
-Oppgaven går ut på å lage en enkel app for å vise ski- og værforholdene for et bestemt skisenter i Norge. Vi skal bruke Fnugg.nos API (https://api.fnugg.no/) til å hente data fra de forskjellige skisenterne. Datene kan enten presenteres direkte til brukerne eller vi kan bruke Fnugg widget (https://www.fnugg.no/widget/resort).
+Oppgaven går ut på å lage en enkel app for å vise ski- og værforholdene for et bestemt skisenter i Norge. Vi skal bruke Fnugg.nos API (https://api.fnugg.no/) til å hente data fra de forskjellige skisenterne. Datene kan enten presenteres direkte til brukeren eller vi kan bruke Fnugg widget (https://www.fnugg.no/widget/resort).
 
 Appen skal ha grunnleggende UX-funksjonalitet for å finne skisentere. Den skal være responsiv og kompatibel med alle moderne nettlesere.
 
@@ -68,31 +68,31 @@ Jeg har brukt jQuery UI's widget **Autocomplete** til å presentere forslag base
 
 Fnuggs Autocomplete API fungerer på følgende måte: Si brukeren f.eks. skriver *"Fje"*, så vil APIet returnere alle skisentere med navn som begynner på *"Fje"* (Gå til https://api.fnugg.no/suggest/autocomplete?q=Fje for å se resultatet av denne forespørselen). Resultatet er i JSON-format.
 
-Resultatet inneholder masse informasjon om hvert senter som jeg ikke er interessert i. For å hente ut relevant data har jeg lagt ved disse variablene i forespørselen: `?sourceFields=name,urls,conditions`. Resultatet gir oss antall treff, navn, og site-path for hvert skisenter. Merk, men ikke noe id! Med id kunne jeg ha gjort spisset søketresultatet enda mer enn slik løsningen er nå. Les mer om dette i `displayinfo.js` og Diskusjon.
+Resultatet inneholder masse informasjon om hvert senter som jeg ikke er interessert i. For å hente ut relevant data har jeg lagt ved disse variablene i forespørselen: `?sourceFields=name,urls,conditions`. Resultatet gir oss antall treff, navn, og site-path for hvert skisenter. Det jeg skulle ønske resultatet ga meg var iden. Med id kunne vi gitt brukeren et mer nøyaktig resultat. Les mer om dette i `displayinfo.js` og Diskusjon.
 
-Basert på det brukeren skriver i søkefeltet utføres en AJAX-forespørsel der navnet på skisenterne hentes ut og legges i en array. Denne arrayen mates så tilbake til autocomplete som viser listen til brukeren. Jeg har brukt jQuery for å gjøre AJAX-forespørselen. Fordelen med å bruke jQuery er at man ikke må håndtere eventuelle HTTP-feil som kan resultere fra forspørselen.
+Basert på det brukeren skriver i søkefeltet utføres en AJAX-forespørsel der navnet på skisenterne hentes ut og legges i en array. Denne arrayen mates så tilbake til autocomplete som viser listen til brukeren. Jeg har brukt jQuery for å gjøre AJAX-forespørselen. Fordelen med å bruke jQuery er at man ikke må ta stilling til alle HTTP-statuskoder, og håndtere eventuelle HTTP-feil som kan resultere fra forspørselen.
 
 Autocompletes parameter `success` håndterer det som skjer etter brukeren har valgt et av alternativene. Når brukeren har valgt et alternativ forteller vi autocomplete at formularet skal sendes ved å si `$('form').submit()`. Filen `search.js` tar seg av det som skjer når formularet sendes. 
 
 ##### autocomplete-vanillajs.js
-Før jeg bestemte meg for å bruke jQuery UI's autocomplete forsøkte jeg meg på å lage min egen autocomplete i vanilla js. Selv om jeg ikke endte opp med å gå for (den delvis fungerende) løsningen valgte jeg likevel å ha den med her. Jeg bruker HTML5 `datalist`-elementet for å presentere foreslåtte søkeresultater. Årsaken til hvorfor jeg valgte å gå bort fra løsningen er pga. den dårlige støtten, samt manglene rundt events for `options`-elementene. Uten å kunne binde handling til når brukeren velger et av alternativene, må brukeren nå trykke enter to ganger, eller først velge alternativet med musepekeren, også trykke enter for å sende forespørselen.
+Før jeg bestemte meg for å bruke jQuery UI's autocomplete forsøkte jeg meg på å lage min egen autocomplete i vanilla js. Selv om jeg ikke endte opp med å gå for (den delvis fungerende) løsningen valgte jeg likevel å ha den med her. Jeg brukte HTML5 `datalist`-elementet for å presentere foreslåtte søkeresultater. Årsaken til hvorfor jeg valgte å gå bort fra løsningen er pga. den dårlige støtten, samt manglene rundt events for `options`-elementene. Uten å kunne binde handling til når brukeren velger et av alternativene, må brukeren slik som løsningen er nå trykke enter to ganger, eller først velge alternativet med musepekeren, også trykke enter for å sende forespørselen.
 
-For å se løsning fjern kommentaren for autocomplete-vanillajs.js i bunnen av body.
+For å se løsning fjern kommentaren for autocomplete-vanillajs.js i bunnen av body. Dette forutsetter at du kloner repoet og kjører det på lokal server.
 
 ##### search.js
-Denne filen håndterer det som skjer når formularet sendes. Vi ønsker nemlig ikke at formularet skal sendes, men å vise frem resultatet av skisenteret brukeren søker på. For å få til det har vi sagt `event.preventDefault()` som hindrer formularet i å utføre standard handling, og ber den om å kjøre funksjonen `displayInfo()` istedenfor, som ligger i filen `displayinfo.js`.
+Denne filen håndterer det som skjer når formularet sendes. Vi ønsker ikke at formularet skal sendes, men at det skal resultatet av skisenteret brukeren søker på. For å få til det har vi sagt `event.preventDefault()` som hindrer formularet i å utføre standard handling, og ber den om å kjøre funksjonen `displayInfo()` istedenfor, som ligger i filen `displayinfo.js`.
 
 ##### displayinfo.js
 
-Basert på valget som brukeren tar og verdien som sendes fra `input`-feltet så utføres det en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved bruk av jQuery `append`.
+Basert på valget som brukeren tar og verdien som sendes fra `input`-feltet utføres en AJAX-forespørsel mot Fnuggs Search API. Data hentes ut og presenteres på siden ved bruk av jQuery `append`.
 
-brukt https://codebeautify.org/jsonviewer treeview gjorde det enklere for meg å hente ut data jeg var interessert i.
+https://codebeautify.org/jsonviewer JSON Treeviewer var til stor nytte i jobben med å finne frem hvilke keys jeg ønsket å få tak i.
 
 ##### displaywidget.js
 
-`displaywidget.js` gjør mye av det samme som `displayinfo.js`, bortsett fra at å skrive ut iframe istedenfor.
+`displaywidget.js` gjør mye av det samme som `displayinfo.js`, men istedenfor å generere masse diver genererer den en iframe.
 
-For å se dette egengenererte resultatet må man fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
+For å se dette resultatet må man fjerne kommentaren rundt `displayWidget()` i `search.js`. Dette krever at hele prosjektet lastes ned på lokal server først.
 
 ##### progressbar.js
 
