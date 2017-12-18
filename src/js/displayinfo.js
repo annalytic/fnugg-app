@@ -15,7 +15,7 @@ function displayInfo() {
   function printInfo2(data) {
     $('.content').empty();
     $('.content').append('<div class="resort-results"></div>');
-    $('.resort-results').append('<span class="searched-for">Du søkte på: <strong>' + searchTerm + '</strong></span>');
+    $('.resort-results').append('<span class="searched-for">Du s&oslash;kte p&aring;: <strong>' + searchTerm + '</strong></span>');
     $('.resort-results').append('<div class="resort-logo"><a href="/"><img src="src/assets/img/logo/logo.svg" xmlns="http://www.w3.org/2000/svg"/></a></div>');
 
     /*
@@ -32,7 +32,7 @@ function displayInfo() {
 
     // Resort condition
     $('.resort-results-block').append('<div class="resort-row resort-condition">'
-    + '<span>' + info._source.conditions.combined.top.condition_description + '</span>' + '<span>' + info._source.conditions.combined.top.last_updated + '</span>' + '</div>');
+    + '<span>' + info._source.conditions.combined.top.condition_description + '</span>' + '<span>Sist oppdatert: ' + info._source.conditions.combined.top.last_updated + '</span>' + '</div>');
 
     // RESORT STATS
     $('.resort-results-block').append('<div class="resort-stats resort-stats"></div>');
@@ -54,7 +54,7 @@ function displayInfo() {
     var ratioSlopes = info._source.slopes.open/info._source.slopes.count;
 
     // Column: Lifts
-    $('.resort-stats').append('<div class="resort-stats-column resort-lifts-slopes"><span class="resort-lifts-slopes__headline">Heiser åpne</span>'
+    $('.resort-stats').append('<div class="resort-stats-column resort-lifts-slopes"><span class="resort-lifts-slopes__headline">Heiser &aring;pne</span>'
     + '<div class="resort-slopes-lifts-row"><span class="resort-lifts-slopes__ratio">'
     + info._source.lifts.open + '/' + info._source.lifts.count + '</span>'
     + '<div class="resort-lifts-slopes__no">' + '<span class="no">' + info._source.lifts.open + '</span>' + '</div>'
@@ -62,7 +62,7 @@ function displayInfo() {
     + '%' + '</span></div>' + '</div>');
 
     // Column: Slopes
-    $('.resort-stats').append('<div class="resort-stats-column resort-lifts-slopes"><span class="resort-lifts-slopes__headline">Åpne nedfarter</span>'
+    $('.resort-stats').append('<div class="resort-stats-column resort-lifts-slopes"><span class="resort-lifts-slopes__headline">&Aring;pne nedfarter</span>'
     + '<div class="resort-lifts-slopes-row"><span class="resort-lifts-slopes__ratio">'
     + info._source.slopes.open + '/' + info._source.slopes.count + '</span>'
     + '<div class="resort-lifts-slopes__no">' + '<span class="no">' + info._source.slopes.open + '</span>' + '</div>'
@@ -73,19 +73,12 @@ function displayInfo() {
 
     // Column: Snow depth
     $('.resort-stats').append('<div class="resort-stats-column resort-snow-depth">'
-    + '<div class="resort-snow-depth__row"><span>I løype</span>' + '<span class="depth">' + info._source.conditions.combined.top.snow.depth_slope + '</span>'+'cm'+'</div>'
+    + '<div class="resort-snow-depth__row"><span>I l&oslash;ype</span>' + '<span class="depth">' + info._source.conditions.combined.top.snow.depth_slope + '</span>'+'cm'+'</div>'
     + '<div class="resort-snow-depth__row"><span>I terreng</span>' + '<span class="depth">' + info._source.conditions.combined.top.snow.depth_terrain + '</span>'+'cm'+'</div>'
     + '</div>');
 
-
-
-
     // Credits
-    $('.resort-results').append('<p class="credit">Vær- og snøinformasjon er levert i samarbeid med yr.no og Meterologisk institutt i tillegg til anleggens egen rapportering');
-
-
-
-
+    $('.resort-results').append('<p class="credit">Vær- og sn&oslash;informasjon er levert i samarbeid med yr.no og Meterologisk institutt i tillegg til anleggens egen rapportering');
   }
 
   $.getJSON(fnuggAPI, fnuggOptions, printInfo2);
