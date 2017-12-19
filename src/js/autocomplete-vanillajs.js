@@ -66,3 +66,16 @@ function autocomplete(event) {
 
   }
 }
+
+// Submit on selecting/hitting enter on seletion
+$('#search').on('input', function(event) {
+  var options = $('datalist')[0].options;
+  for (var i = 0; i < options.length; i += 1) {
+    if (options[i].value == $(this).val()) {
+      $(this).val(options[i].value);
+      $('form').submit();
+    } else {
+      return;
+    }
+  }
+});
