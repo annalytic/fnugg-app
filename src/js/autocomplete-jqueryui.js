@@ -43,6 +43,9 @@ const autocompleteJUI = $('#search').autocomplete({
   select: function(event, ui) {
     $('#search').val(ui.item.value);
     $('form').submit();
+    ui.addEventListener('touchend', function() {
+      $('form').submit();
+    });
   }
 });
 
